@@ -1,0 +1,8 @@
+packages:
+  - name: builder
+    shared: true
+    actions:
+      - name: build_swift_5.4
+        runtime: "swift:5.4"
+        limits:
+          timeout: 240000
