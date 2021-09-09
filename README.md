@@ -14,7 +14,7 @@ The existing action works fine for running correct builds (those that will succe
 
 In this repository I am maintaining an alternate version of the builder action for action-loop runtimes that provides smooth feedback of error information when there are failures.  It cooperates with a small change to `nim` CLI in order to achieve the proper error display.
 
-There is no easy way for me to submit a PR for this code because, although it is made public in the published actions, it is not sourced from a public repository.  But
-1.  The code shown here started with an exact copy made with `nim action get` as shown above.
+There is no way for me to submit a PR for the build action code because, although it is made public in the published actions, it is not sourced from a public repository.  But
+1.  The code sourced in this repository started with an exact copy made with `nim action get` as illustrated above.
 2.  As you can see the, code is under the Apache License.
 3.  By putting my revised version in this repository I am donating the result back to Nimbella and will work with Nimbella personnel on getting it integrated.
