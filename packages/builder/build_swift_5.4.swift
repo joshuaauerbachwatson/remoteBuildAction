@@ -30,31 +30,34 @@ def build(env, inp):
     for k in env: print("%s=%s" %(k,env[k]))
     print(inp)
     toBuild = "slice:" + inp["toBuild"]
-    cmd = ["nim", "project", "deploy", toBuild, "--verbose"]
+    cmd = ["nim", "project", "deploy", toBuild]
     print(cmd)
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE,
            stderr=subprocess.PIPE, env=env)
     print("subprocess created")
     (o, e) = p.communicate()
     print("subprocess finished, rc=%d" %(p.returncode))
-    if o:
+    # Other than displaying it in the activation record, we ignore the exit code.  Nim may set
+    # rc=1 in the case where there were some errors but the stdout contains the normal return information,
+    # however with some errors recorded there.  Instead of keying on the exit code, we assume that if stderr
+    # is non-empty there was the sort of error that should be displayed as such and if stderr is empty and 
+    # stdout is non-empty, then stdout contains the normal return.  If both stdout and stderr are empty that
+    # is weird and we indicate a non-specific error but that should not happen.  
+    if e:
+        if isinstance(e, bytes) and not isinstance(e, str):
+            print("decoding stderr")
+            e = e.decode('utf-8')
+        print("contents of stderr:")
+        print(ascii(e))
+        o = json.dumps({ "error": e}) + "\n"
+    elif o:
         if isinstance(o, bytes) and not isinstance(o, str):
             print("decoding stdout")
             o = o.decode('utf-8')
         else:
             print("not decoding stdout")
     else:
-        print("stdout is empty")
-        if e:
-            if isinstance(e, bytes) and not isinstance(e, str):
-                print("decoding stderr")
-                e = e.decode('utf-8')
-            print("contents of stderr:")
-            print(ascii(e))
-            o = json.dumps({ "error": "remote nim terminated unexpectedly with error: see activation record for details"}) + "\n"
-        else:
-            print("stderr is empty")
-            o = json.dumps({ "error": "remote nim terminated with unexplained error"}) + "\n"
+        o = json.dumps({ "error": "remote nim terminated with unexplained error"}) + "\n"
     return o
 
 def main(env, args):
