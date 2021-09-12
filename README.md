@@ -14,12 +14,12 @@ Many runtimes actually share the same build action code.  The code for Swift is 
 
 The existing action works fine for running correct builds (those that will succeed).  But, there are a number of problems with error handling, meaning that, if there is some error in your code, you will find it hard to diagnose.  In the worst case, the action will hang after the error is caught, and will time out.  There is essentially no useful information about the original error in the activation record.
 
-In this repository I am maintaining an alternate version of the builder action for action-loop runtimes that provides smooth feedback of error information when there are failures.  It cooperates with a small change to `nim` CLI in order to achieve the proper error display.
+In this repository I am maintaining an alternate version of the builder action for action-loop runtimes that provides smooth feedback of error information when there are failures.  The output (currently) is a little too verbose:
 
-- The change to the `nim` CLI will be proposed by me as a PR to that component.  It does not yet exist, nor can be certain it will be accepted.  However, even without it, using the code of this repository instead of the original code will improve things substantially.  The output will be messy but still intelligible.
+```
+ ›   Error: While deploying running remote build for test: Remote error ' ›   Error: 'swift:5.4' is not a valid runtime value
+```
 
-Although the build action code is public, it is not source-controlled in a public repository and hence I can't submit a PR.  This repository is in lieu of a PR.
+I will propose a small PR to the Nimbella deployer that will improve that wording to be less redundant.
 
-1.  The code in this repository started with an exact copy made with `nim action get` as illustrated above.
-2.  As you can see the, code is under the Apache License.
-3.  By putting my revised version in this repository I am donating the result back to Nimbella and will work with Nimbella personnel on getting it integrated.
+The code is currently structured for easy installation as a Swift 5.4 builder action only.  I will change that, and provide instructions on how you can install the action for any of the runtimes to which it applies and temporarily use that alternative.
