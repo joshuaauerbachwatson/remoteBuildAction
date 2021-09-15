@@ -22,4 +22,15 @@ In this repository I am maintaining an alternate version of the builder action f
 
 I will propose a small PR to the Nimbella deployer that will improve that wording to be less redundant.
 
-The code is currently structured for easy installation as a Swift 5.4 builder action only.  I will change that, and provide instructions on how you can install the action for any of the runtimes to which it applies and temporarily use that alternative.
+To use this code
+1.  Clone this repository locally.
+2.  Then `nim project deploy /path/to/clone`
+    - This will install copies of the action-loop builder actions in your personal namespace.
+    - Any recent version of `nim` can be used to _install_ the actions.
+3.  To _use_ the just-installed actions for remote builds, you need a version of `nim` more recent than 1.17.0 (which was the stable version as of this writing).
+    - Install the _preview_ version of `nim` using `npm` or `yarn`, globally, from https://preview-apigcp.nimbella.io/nimbella-cli.tgz.
+    - Or, build and locally install your own `nim` as described in the README in `https://github.com/nimbella/nimbella-cli`.
+    - This will become unnecessary when a version later than 1.17.0 is released.
+4.  Set `TEST_BUILDER_NAMESPACE` to your personal namespace in the environment.
+    - This will cause the alternative builder actions to be used for remote builds in action-loop runtimes.
+    - For remote builds in `nodejs` runtimes you will need to unset the environment variable or set it to `nimbella` because I don't provide alternatives for those. 
