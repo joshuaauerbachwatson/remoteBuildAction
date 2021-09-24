@@ -61,3 +61,4 @@ packages:
         runtime: "swift:5.4"
         limits:
           timeout: ${TIMEOUT}
+          memory: 768
