@@ -1,5 +1,7 @@
 # Revised source to certain Nimbella remote build actions
 
+_There will be no further developments in this repo.  I am now employed by DigitalOcean.  I will work to get the alternative builder actions in this repo into serverless offerings from DigitalOcean that will replace Nimbella.  The timetable for that is unclear.   Meanwhile, if you have a Nimbella account, this code can continue to be useful._
+
 If you have an account in [Nimbella](https://nimbella.com) you can request to have actions pre-compiled in the runtime container in which they will run.  This is called _remote build_ and is described [here](https://docs.nimbella.com/building#remote-builds).
 
 Remote build in each runtime uses an OpenWhisk action with the name `/nimbella/builder/build_<lang>_<version>`.  The code of these actions is public.  For example, to retrieve the code for the Swift 5.4 runtime you can use
